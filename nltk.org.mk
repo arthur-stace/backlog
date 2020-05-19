@@ -1,23 +1,16 @@
-default: schedule
-	# docker run \
-	# 	--rm \
-	# 	-p 10000:8888 \
-	# 	-e JUPYTER_ENABLE_LAB=yes \
-	# 	-v "$PWD":/home/jovyan/work \
-	# 	jupyter/scipy-notebook
+PATTERN = 'Exercises'
 
-tmp/notes:
+tmp/%:
 	@mkdir -p $@
 
-schedule: tmp/notes
+apts: tmp/apts tmp/notes
 	@curl https://www.nltk.org/book/ch00.html \
 	| pup '#tab-course-plans td text{}' \
 	| split -l 3
-	@mv x* tmp/
-	@sh ./schedule.sh > apts
-	${MAKE} clean
+	@mv x* $</
+	@sh makefiles/notes.sh $? > $@
 
 clean:
-	@mv tmp/notes/* ./notes/
 	@rm -rf x*
 	@rm -rf tmp/*
+	@rm -rf notes apts

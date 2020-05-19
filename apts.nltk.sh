@@ -1,10 +1,7 @@
-# TODO pick a language
+# TODO seperate note and apt creation
 for ch in $(ruby -e "puts ('a'..'k').to_a.zip(('01'..'11').to_a).inspect" | jq -cr .[]); do
   letter=`echo $ch | jq -r .[0]`
   num=`echo $ch | jq -r .[1]`
-  BEGIN_DATE=`date +%m/%d/%Y`
-  BEGIN_TIME=`date +%H:%M`
-  FINISH_DATE=`date -v +1d +%m/%d/%Y`
   DURATION=`cat tmp/xa$letter | tail -n 1 | jq -rR 'split("-") | max'`
   EVENT_TITLE=`cat tmp/xa$letter | head -n 1`
   FINISH_TIME=`date -v '+'$DURATION'H' +%H:%M`

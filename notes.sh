@@ -5,6 +5,7 @@ apts=$1
 notes=$2
 
 
+# TODO enhance pattern matching
 for appt in $(ls $apts/x*); do
   str=`cat $appt`
   touch $notes/`echo $str | shasum`
@@ -16,7 +17,7 @@ for appt in $(ls $apts/x*); do
   START_TIME=`date +%H:%M`
   END_TIME=`date -v +2H +%H:%M`
 
-  DESCRIPTION=`echo $str | grep -E 'Lab|Lecture|Exam|Questions' | head -c 45`
+  DESCRIPTION=`echo $str | grep -E .+ | head -c 45`
 
   echo "$START_DATE @ $START_TIME -> $END_DATE @ $END_TIME >$file | $DESCRIPTION"
 done
