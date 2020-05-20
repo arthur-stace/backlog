@@ -1,19 +1,14 @@
-.PHONY:
-
 FILE_PATTERN = nltk_ch* ocw_*
 
-todo: ${COURSE_SECTIONS} .PHONY
+todo: ${COURSE_SECTIONS}
 	@rm -f $@
 	@for file in $(shell ls ${FILE_PATTERN}); \
-		do ${MAKE} notes/$$file >> $@; \
+		do ${MAKE} -f todo.mk notes/$$file >> $@; \
 		done
 	@rm -f ${FILE_PATTERN}
 
 notes:
-	@mkdir $@
+	@mkdir -p $@
 
 notes/%: notes
-	@sh makefiles/todo.sh $@
-
-clean:
-	@rm -rf ocw_* todo
+	@sh todo.sh $@
