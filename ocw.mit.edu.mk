@@ -12,8 +12,6 @@ tmp/${COURSE}.zip: tmp/${COURSE}
 		${OCW_ZIP_DOMAIN}/${COURSE_PREFIX}/${COURSE}/${COURSE}.zip
 	tar xf $@ -C $<
 
-.PHONY:
-
 
 tmp/%.txt: tmp/${COURSE}.zip .PHONY
 	cat tmp/${COURSE}/${COURSE}/contents/$*/index.htm \

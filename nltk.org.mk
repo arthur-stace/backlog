@@ -1,16 +1,6 @@
-PATTERN = 'Exercises'
-
-tmp/%:
-	@mkdir -p $@
-
-apts: tmp/apts tmp/notes
-	@curl https://www.nltk.org/book/ch00.html \
-	| pup '#tab-course-plans td text{}' \
-	| split -l 3
-	@mv x* $</
-	@sh makefiles/notes.sh $? > $@
+tmp/%.txt: .PHONY
+	@lynx -dump -list_inline ${DOMAIN}/book/$*.html > $@
+	@sh makefiles/nltk.org/exercises.sh $@ $*
 
 clean:
-	@rm -rf x*
-	@rm -rf tmp/*
-	@rm -rf notes apts
+	@rm -rf nltk_ch*
