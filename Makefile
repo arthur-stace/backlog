@@ -1,21 +1,33 @@
+# fixme variable expansion unix (docker) or make
+LOCAL_RESOURCE=tmp/$(COURSE).zip
+REMOTE_RESOURCE=https://$(DOMAIN)/$(COURSE)/archive/master.zip
 default: todo
 
+build:
+	docker build -t $$DOMAIN:latest .
+
+run: build
+	docker run -it \
+		--env-file test/$(DOMAIN).test001.env \
+		-v $(shell pwd)/tmp:/usr/app/tmp \
+		-v $(shell pwd)/$(DOMAIN):/usr/app/$(DOMAIN) \
+		-v $(shell pwd)/test:/usr/app/test \
+		-v $(shell pwd)/bin:/usr/app/bin \
+		$(DOMAIN):latest make
+
 todo: tmp/$(COURSE) $(SECTIONS)
-	@for entry in tmp/*.txt; do cat $$entry | grep -e $$READ_FILTER > $@; done
-	@wc -l $@
+	echo $(SECTIONS)
+	cat $(SECTIONS) > $@
+	wc -l $@
 
 {tmp,notes}:
 	mkdir -p $@
 
-%/$(COURSE): $(LOCAL_RESOURCE)
-	tar xf $< -C $*
+%/$(COURSE): $(LOCAL_RESOURCE) tmp
+	unzip -o $< -d $@
 
 tmp/%.txt: tmp/$(COURSE)
-	find tmp -type f -name *index* -or -name *README* -or -name *ch* \
-	| xargs cat \
-	| pup $$FETCH_FILTER \
-	| lynx -dump -stdin -list_inline \
-	> $@
+	find tmp -type f -name *$** > $@
 
 $(LOCAL_RESOURCE): $(DOMAIN)/fetch
 	$< $@ $(REMOTE_RESOURCE)
@@ -30,7 +42,10 @@ notes/%:
 
 clean: .PHONY
 	@echo "\ncleaning tmp/\n"
-	@ls tmp | grep -v zip | xargs -I _ rm -rf tmp/_
+	@rm -rf $(SECTIONS)
+
+tmp:
+	mkdir -p $@
 
 test: clean
 	bats test/$$DOMAIN.bats

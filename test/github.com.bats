@@ -3,9 +3,9 @@ setup(){
 }
 
 @test "create github README" {
-  run make -B tmp/README.txt
-  run wc -l tmp/README.txt
+  run make run
+  run wc -l todo
   [ "$status" -eq 0 ]
-  [ "${lines[0]}" = "    7553 tmp/README.txt" ]
+  [ "${lines[0]}" = "      94 todo" ]
 }
 
