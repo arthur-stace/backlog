@@ -1,37 +1,41 @@
-default: todo
+# environment management needs maturing
+LOCAL_RESOURCE=tmp/$(COURSE).zip
+REMOTE_RESOURCE=https://www.$(DOMAIN)/$(COURSE)
+default: run
 
-todo: tmp/$(COURSE) $(SECTIONS)
-	@for entry in tmp/*.txt; do cat $$entry | grep -e $$READ_FILTER > $@; done
-	@wc -l $@
+build:
+	docker build -t $$DOMAIN:latest .
+
+run:
+	docker run -it \
+		--env-file $$ENV_FILE \
+		-v $(shell pwd):/work \
+		$(DOMAIN):latest make sections
+
+sections: $(SECTIONS)
 
 {tmp,notes}:
 	mkdir -p $@
 
-%/$(COURSE): $(LOCAL_RESOURCE)
-	tar xf $< -C $*
+tmp/$(COURSE): $(LOCAL_RESOURCE)
+	unzip -o $< -d $@
 
 tmp/%.txt: tmp/$(COURSE)
-	find tmp -type f -name *index* -or -name *README* -or -name *ch* \
-	| xargs cat \
-	| pup $$FETCH_FILTER \
-	| lynx -dump -stdin -list_inline \
-	> $@
+	$(DOMAIN)/model $* > $@
 
 $(LOCAL_RESOURCE): $(DOMAIN)/fetch
 	$< $@ $(REMOTE_RESOURCE)
 
-tmp/%.txta%:
+tmp/%.txta%: $(SECTIONS)
 	find tmp -name *.txta
-
-notes/%:
-	sh todo.sh $@
 
 .PHONY:
 
 clean: .PHONY
-	@echo "\ncleaning tmp/\n"
-	@ls tmp | grep -v zip | xargs -I _ rm -rf tmp/_
+	@echo "\ncleaning up...\n"
+	@rm -rf $(SECTIONS)
 
-test: clean
-	bats test/$$DOMAIN.bats
-
+test: clean run
+	@echo "\ntesting specified files...\n"
+	@jq -Msce < $(SECTIONS) | head -c 45
+	@echo "\n\n\nfiles contain valid json\n"
