@@ -1,5 +1,5 @@
 setup(){
-source nltk.env
+source test/example.nltk.env
 }
 
 @test "create nltk backlog" {
