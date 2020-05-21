@@ -3,6 +3,8 @@
 resource=$2
 outfile=$1
 
+rm $outfile
+
 pushd tmp
 
 for i in $SECTIONS; do
@@ -11,7 +13,8 @@ for i in $SECTIONS; do
   curl --remote-name $resource/$chapter.html
 done
 
+zip -r book *.html
+
 popd
 
-tar cf $outfile tmp/*.html
 
