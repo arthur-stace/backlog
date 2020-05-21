@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+resource=$2
+outfile=$1
+
+pushd tmp
+
+for i in $SECTIONS; do
+  chapter=ch`basename $i .txt`
+
+  curl --remote-name $resource/$chapter.html
+done
+
+popd
+
+tar cf $outfile tmp/*.html
+

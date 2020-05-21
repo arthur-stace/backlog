@@ -1,4 +1,0 @@
-#!/usr/bin/env sh
-
-split -p Exercises $1 $1
-
