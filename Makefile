@@ -11,8 +11,7 @@ todo: tmp/$(COURSE) $(SECTIONS)
 	tar xf $< -C $*
 
 tmp/%.txt: tmp/$(COURSE)
-	find tmp -name *.htm* \
-	| grep $* \
+	find tmp -type f -name *index* -or -name *README* -or -name *ch* \
 	| xargs cat \
 	| pup $$FETCH_FILTER \
 	| lynx -dump -stdin -list_inline \
@@ -27,12 +26,12 @@ tmp/%.txta%:
 notes/%:
 	sh todo.sh $@
 
+.PHONY:
+
 clean: .PHONY
 	@echo "\ncleaning tmp/\n"
 	@ls tmp | grep -v zip | xargs -I _ rm -rf tmp/_
 
-.PHONY:
-
-test: clean .PHONY
-	bats test/*.bats
+test: clean
+	bats test/$$DOMAIN.bats
 

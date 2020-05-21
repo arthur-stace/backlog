@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+echo $@ \
+| pup $$FETCH_FILTER \
+| lynx -dump -stdin -list_inline
