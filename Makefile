@@ -1,6 +1,6 @@
 # fixme variable expansion unix (docker) or make
 LOCAL_RESOURCE=tmp/$(COURSE).zip
-REMOTE_RESOURCE=https://$(DOMAIN)/$(COURSE)/archive/master.zip
+REMOTE_RESOURCE=https://www.$(DOMAIN)/$(COURSE)
 default: todo
 
 build:
