@@ -1,4 +1,8 @@
 #!/usr/bin/env sh
 
-# TODO markdown parsing
-echo $@
+dir=$1
+filter=$2
+
+find $dir -type f -name *$filter* \
+| xargs cat
+# | markdown | pup json{}

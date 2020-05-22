@@ -1,33 +1,24 @@
 default: todo
 
-build:
-	docker build -t $$DOMAIN:latest .
-
-run: build
-	docker run -it \
-		--env-file test/$(DOMAIN).test001.env \
-		-v $(shell pwd)/tmp:/usr/app/tmp \
-		-v $(shell pwd)/$(DOMAIN):/usr/app/$(DOMAIN) \
-		-v $(shell pwd)/test:/usr/app/test \
-		-v $(shell pwd)/bin:/usr/app/bin \
-		$(DOMAIN):latest make
-
 todo: $(SECTIONS)
 
 {tmp,notes}:
-	mkdir -p $@
+	@mkdir -p $@
 
 tmp/%.txt: tmp/$(COURSE)
-	$(DOMAIN)/model $< $* > $@
+	@$(DOMAIN)/model $< $* > $@
 
 tmp/$(COURSE): $(LOCAL_RESOURCE)
-	unzip -o $< -d $@
+	@unzip -o $< -d $@
 
-$(LOCAL_RESOURCE): $(DOMAIN)/fetch
+$(DOMAIN)/get:
+	@$@
+
+$(LOCAL_RESOURCE): $(DOMAIN)/get
+	@ls $@
 
 clean:
-	@echo "\ncleaning tmp/\n"
 	@rm -rf $(SECTIONS)
 
 test: clean
-	bats test/$$DOMAIN.bats
+	bats test/$$DOMAIN/*.bats
