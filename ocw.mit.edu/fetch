@@ -1,7 +1,4 @@
 #!/usr/bin/env sh
 
-archive=$1
-url=$2
-
-curl --output $archive -O -L -C - $url
+curl -o $LOCAL_RESOURCE -O -L -C - $REMOTE_RESOURCE
 
