@@ -7,13 +7,10 @@ default: todo
 build:
 	docker build -t $$DOMAIN:latest .
 
-run: build
+run:
 	docker run -it \
-		--env-file test/$(DOMAIN).test001.env \
-		-v $(shell pwd)/tmp:/usr/app/tmp \
-		-v $(shell pwd)/$(DOMAIN):/usr/app/$(DOMAIN) \
-		-v $(shell pwd)/test:/usr/app/test \
-		-v $(shell pwd)/bin:/usr/app/bin \
+		--env-file test/$(DOMAIN)/test001.env \
+		-v $(shell pwd):/work \
 		$(DOMAIN):latest make $(SECTIONS)
 
 todo: $(SECTIONS)
@@ -42,5 +39,5 @@ clean: .PHONY
 	@echo "\ncleaning up...\n"
 	@rm -rf $(SECTIONS)
 
-test:
-	bats test/$(DOMAIN)/*.bats
+test: clean run
+	jq -Msce < $(SECTIONS)
