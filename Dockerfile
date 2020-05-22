@@ -3,7 +3,7 @@ FROM golang:latest
 
 RUN apt-get update
 
-RUN apt-get install -y make bats curl unzip zip jq
+RUN apt-get install -y make unzip zip jq
 
 RUN go get github.com/ericchiang/pup
 WORKDIR /work

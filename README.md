@@ -1,6 +1,13 @@
 makefiles
 ---
 
+this should work
+
+```
+SECTIONS=tmp/ch00.txt DOMAIN=ntlk.org make
+jq -Msce < tmp/*.txt
+```
+
 this project aims to be a starting point for this workflow
 
 the idea is to create a set of tasks from text scraped from the web

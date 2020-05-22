@@ -1,13 +1,12 @@
-# fixme variable expansion unix (docker) or make
+# fixme : cleanrly environment variables need to be dealt with better
 LOCAL_RESOURCE=tmp/$(COURSE).zip
-# fixme better project domain config
 REMOTE_RESOURCE=https://www.$(DOMAIN)/$(COURSE)
-default: todo
+default: run
 
 build:
 	docker build -t $$DOMAIN:latest .
 
-run:
+run: build
 	docker run -it \
 		--env-file test/$(DOMAIN)/test001.env \
 		-v $(shell pwd):/work \
