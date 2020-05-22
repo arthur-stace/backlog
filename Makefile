@@ -1,6 +1,7 @@
-# environment management needs maturing
-LOCAL_RESOURCE=tmp/$(COURSE).zip
-REMOTE_RESOURCE=https://www.$(DOMAIN)/$(COURSE)
+include $(DOMAIN).mk
+
+LOCAL_RESOURCE = tmp/$(COURSE).zip
+
 default: run
 
 build:
@@ -8,7 +9,11 @@ build:
 
 run:
 	docker run -it \
-		--env-file $$ENV_FILE \
+		-e DOMAIN=$(DOMAIN) \
+		-e COURSE=$(COURSE) \
+		-e SECTIONS="$(SECTIONS)" \
+		-e LOCAL_RESOURCE=$(LOCAL_RESOURCE) \
+		-e REMOTE_RESOURCE=$(REMOTE_RESOURCE) \
 		-v $(shell pwd):/work \
 		$(DOMAIN):latest make sections
 
@@ -20,22 +25,15 @@ sections: $(SECTIONS)
 tmp/$(COURSE): $(LOCAL_RESOURCE)
 	unzip -o $< -d $@
 
-tmp/%.txt: tmp/$(COURSE)
-	$(DOMAIN)/model $* > $@
-
 $(LOCAL_RESOURCE): $(DOMAIN)/fetch
 	$< $@ $(REMOTE_RESOURCE)
 
-tmp/%.txta%: $(SECTIONS)
-	find tmp -name *.txta
+tmp/%.txt: tmp/$(COURSE)
+	$(DOMAIN)/model $* $< > $@
+
 
 .PHONY:
 
 clean: .PHONY
 	@echo "\ncleaning up...\n"
 	@rm -rf $(SECTIONS)
-
-test: clean run
-	@echo "\ntesting specified files...\n"
-	@jq -Msce < $(SECTIONS) | head -c 45
-	@echo "\n\n\nfiles contain valid json\n"

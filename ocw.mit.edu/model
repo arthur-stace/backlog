@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 
-echo $@ \
-| pup $$FETCH_FILTER \
-| lynx -dump -stdin -list_inline
+section=$1
+dir=$2
+
+find $dir -name *.htm -path *$section* \
+| xargs cat  \
+| pup '#course_inner_section json{}'
