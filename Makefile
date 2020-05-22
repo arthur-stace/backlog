@@ -25,7 +25,7 @@ sections: $(SECTIONS)
 tmp/$(COURSE): $(LOCAL_RESOURCE)
 	unzip -o $< -d $@
 
-$(LOCAL_RESOURCE): $(DOMAIN)/fetch
+$(LOCAL_RESOURCE): $(DOMAIN)/get
 	$< $@ $(REMOTE_RESOURCE)
 
 tmp/%.txt: tmp/$(COURSE)
