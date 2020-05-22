@@ -1,7 +1,10 @@
 # fixme variable expansion unix (docker) or make
 LOCAL_RESOURCE=tmp/$(COURSE).zip
+# fixme better project domain config
 REMOTE_RESOURCE=https://www.$(DOMAIN)/$(COURSE)
 default: todo
+
+include $(DOMAIN).mk
 
 build:
 	docker build -t $$DOMAIN:latest .
@@ -15,24 +18,21 @@ run: build
 		-v $(shell pwd)/bin:/usr/app/bin \
 		$(DOMAIN):latest make
 
-todo: tmp/$(COURSE) $(SECTIONS)
-	echo $(SECTIONS)
-	cat $(SECTIONS) > $@
-	wc -l $@
+todo: $(SECTIONS)
 
 {tmp,notes}:
 	mkdir -p $@
 
-%/$(COURSE): $(LOCAL_RESOURCE) tmp
+tmp/$(COURSE): $(LOCAL_RESOURCE)
 	unzip -o $< -d $@
 
 tmp/%.txt: tmp/$(COURSE)
-	find tmp -type f -name *$** > $@
+	$(DOMAIN)/model $* > $@
 
 $(LOCAL_RESOURCE): $(DOMAIN)/fetch
 	$< $@ $(REMOTE_RESOURCE)
 
-tmp/%.txta%:
+tmp/%.txta%: $(SECTIONS)
 	find tmp -name *.txta
 
 notes/%:
@@ -44,9 +44,7 @@ clean: .PHONY
 	@echo "\ncleaning tmp/\n"
 	@rm -rf $(SECTIONS)
 
-tmp:
-	mkdir -p $@
-
 test: clean
 	bats test/$$DOMAIN.bats
 
+test/test.json:
