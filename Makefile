@@ -4,8 +4,6 @@ LOCAL_RESOURCE=tmp/$(COURSE).zip
 REMOTE_RESOURCE=https://www.$(DOMAIN)/$(COURSE)
 default: todo
 
-include $(DOMAIN).mk
-
 build:
 	docker build -t $$DOMAIN:latest .
 
