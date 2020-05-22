@@ -3,18 +3,14 @@
 resource=$2
 outfile=$1
 
-rm $outfile
-
-pushd tmp
-
 for i in $SECTIONS; do
   chapter=`basename $i .txt`
 
-  curl --remote-name $resource/$chapter.html
+  echo "$chapter"
+
+  curl -o tmp/$chapter.html --remote-name $resource/$chapter.html
 done
 
-zip -r book *.html
-
-popd
+zip -r $outfile tmp/*.html
 
 

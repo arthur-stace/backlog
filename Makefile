@@ -14,7 +14,7 @@ run: build
 		-v $(shell pwd)/$(DOMAIN):/usr/app/$(DOMAIN) \
 		-v $(shell pwd)/test:/usr/app/test \
 		-v $(shell pwd)/bin:/usr/app/bin \
-		$(DOMAIN):latest make
+		$(DOMAIN):latest make $(SECTIONS)
 
 todo: $(SECTIONS)
 
@@ -39,10 +39,8 @@ notes/%:
 .PHONY:
 
 clean: .PHONY
-	@echo "\ncleaning tmp/\n"
+	@echo "\ncleaning up...\n"
 	@rm -rf $(SECTIONS)
 
-test: clean
-	bats test/$$DOMAIN.bats
-
-test/test.json:
+test:
+	bats test/$(DOMAIN)/*.bats
