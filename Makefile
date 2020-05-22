@@ -6,13 +6,13 @@ default: run
 build:
 	docker build -t $$DOMAIN:latest .
 
-run: build
+run:
 	docker run -it \
-		--env-file test/$(DOMAIN)/test001.env \
+		--env-file $$ENV_FILE \
 		-v $(shell pwd):/work \
-		$(DOMAIN):latest make $(SECTIONS)
+		$(DOMAIN):latest make sections
 
-todo: $(SECTIONS)
+sections: $(SECTIONS)
 
 {tmp,notes}:
 	mkdir -p $@
@@ -39,4 +39,6 @@ clean: .PHONY
 	@rm -rf $(SECTIONS)
 
 test: clean run
-	jq -Msce < $(SECTIONS)
+	@echo "\ntesting specified files...\n"
+	@jq -Msce < $(SECTIONS) | head -c 45
+	@echo "\n\n\nfiles contain valid json\n"
