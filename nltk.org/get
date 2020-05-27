@@ -1,14 +1,17 @@
 #!/usr/bin/env sh
 
-resource=$2
 outfile=$1
+
+resource=$2
+
+mkdir -p tmp/$DOMAIN/$COURSE
 
 for i in $SECTIONS; do
   chapter=`basename $i .txt`
 
-  curl -o tmp/$chapter.html --remote-name $resource/$chapter.html
+  curl -o tmp/$DOMAIN/$COURSE/$chapter.html --remote-name $resource/$chapter.html
 done
 
-zip -r $outfile tmp/*.html
+zip -r $outfile tmp/$DOMAIN/$COURSE/*.html
 
 
