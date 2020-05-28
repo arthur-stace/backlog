@@ -1,5 +1,4 @@
 include $(DOMAIN).mk
-
 LOCAL_RESOURCE = tmp/$(COURSE).zip
 
 default: run
