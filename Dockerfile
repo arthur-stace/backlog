@@ -1,9 +1,4 @@
-FROM ubuntu:latest
-FROM golang:latest
+FROM tomsquest/docker-radicale
+COPY data /data
 
-RUN apt-get update
-
-RUN apt-get install -y make unzip zip jq
-
-RUN go get github.com/ericchiang/pup
-WORKDIR /work
+CMD radicale --server-hosts 0.0.0.0:$PORT --config /config/config

@@ -1,4 +1,11 @@
 #!/usr/bin/env sh
 
-cat tmp/$@.html \
+# TODO filter pup with $section
+# TODO consider renaming section to filter
+
+section=$1
+dir=$2
+
+find $dir -name *html* \
+| xargs cat \
 | pup ".document, #exercises json{}"
