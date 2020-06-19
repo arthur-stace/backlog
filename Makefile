@@ -12,14 +12,14 @@ SUBTREE_ADD = git subtree add --squash --prefix
 remotes: /tmp/repos.txt .PHONY
 	for remote_name in $(shell cat $< | head -n 2); do \
 		project_name=$(USER)/$$remote_name; \
-		$(ADD_REMOTE) $$remote_name https://github.com/$$project_name.git; \
-		$(SUBTREE_ADD) $$project_name $$remote_name master; \
+		$(ADD_REMOTE) $(USER)/$$remote_name https://github.com/$$project_name.git; \
+		$(SUBTREE_ADD) $$project_name $(USER)/$$remote_name master; \
 	done
 
 /tmp/repos.txt:
 	$(OK_SH) list_repos $(USER) _filter='.[] | "\(.name)"' > $@
 
 clean:
-	for name in $(shell cat /tmp/repos.txt | head -n 2); do git remote rm $$name; done
+	for name in $(shell cat /tmp/repos.txt | head -n 2); do git remote rm $(USER)/$$name; done
 	rm -rf $(TMP_FILES)
 	rm -rf arthur-stace
