@@ -10,17 +10,16 @@ SUBTREE_ADD = git subtree add --squash --prefix
 
 .PHONY:
 remotes: /tmp/repos.txt .PHONY
-	for name in $(shell cat $< | head -n 2); do \
-		qualified_name=$(USER)/$$name; \
-		echo $$qualified_name; \
-		$(ADD_REMOTE) $$qualified_name https://github.com/$$qualified_name; \
-		echo $(SUBTREE_ADD) $$qualified_name "$$qualfied_name"master; \
+	for remote_name in $(shell cat $< | head -n 2); do \
+		project_name=$(USER)/$$remote_name; \
+		$(ADD_REMOTE) $$remote_name https://github.com/$$project_name.git; \
+		$(SUBTREE_ADD) $$project_name $$remote_name master; \
 	done
 
 /tmp/repos.txt:
 	$(OK_SH) list_repos $(USER) _filter='.[] | "\(.name)"' > $@
 
 clean:
-	for name in $(shell cat /tmp/repos.txt); do git remote rm $(USER)/$$name; done
+	for name in $(shell cat /tmp/repos.txt | head -n 2); do git remote rm $$name; done
 	rm -rf $(TMP_FILES)
 	rm -rf arthur-stace

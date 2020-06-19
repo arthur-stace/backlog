@@ -1,7 +1,0 @@
-#!/usr/bin/env sh
-
-archive=$1
-url=$2
-
-curl --output $archive -O -L -C - $url
-

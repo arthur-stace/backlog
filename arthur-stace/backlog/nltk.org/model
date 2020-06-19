@@ -1,4 +1,0 @@
-#!/usr/bin/env sh
-
-cat tmp/$@.html \
-| pup ".document, #exercises json{}"
