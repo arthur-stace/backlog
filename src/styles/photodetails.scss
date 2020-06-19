@@ -1,0 +1,90 @@
+@import "bulma/sass/utilities/_all.sass";
+
+.photo-detail-page {
+  width: 100%;
+}
+
+.photo_license {
+  text-transform: uppercase;
+}
+
+.photo {
+  width: 100%;
+  background: rgb(245, 245, 245);
+}
+
+.icon {
+  vertical-align: middle;
+}
+
+.photo_image-ctr {
+  max-height: 55rem;
+  overflow: hidden;
+  text-align: center;
+
+  img {
+    position: relative;
+    width: auto;
+    height: auto;
+    max-height: 44rem;
+    max-width: 100%;
+  }
+
+  /* Small only */
+  @include mobile {
+    padding: 30px 15px;
+  }
+}
+
+.photo_info-ctr {
+
+  /* Small only */
+  @include mobile {
+    padding: 30px 0;
+  }
+}
+
+.help-icon {
+  height: 24px;
+}
+
+.provider-logo {
+  height: 64px;
+  display: block;
+}
+
+.back {
+  vertical-align: middle;
+}
+
+// from http://www.cssarrowplease.com/
+.report-form {
+	position: absolute;
+	background: #ffffff;
+  border: 2px solid #D8D8D8;
+  z-index: 10;
+  width: 22rem;
+}
+.report-form:after, .report-form:before {
+	bottom: 100%;
+	left: 10%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.report-form:after {
+	border-color: rgba(255, 255, 255, 0);
+	border-bottom-color: #ffffff;
+	border-width: 10px;
+	margin-left: -10px;
+}
+.report-form:before {
+	border-color: rgba(120, 120, 120, 0);
+	border-bottom-color: #D8D8D8;
+	border-width: 13px;
+	margin-left: -13px;
+}
