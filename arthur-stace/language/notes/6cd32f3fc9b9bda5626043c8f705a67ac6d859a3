@@ -1,0 +1,154 @@
+8   Exercises
+
+    1. su Translate the following sentences into propositional logic and
+       verify that they can be processed with Expression.fromstring().
+       Provide a key which shows how the propositional variables in your
+       translation correspond to expressions of English.
+         1. If Angus sings, it is not the case that Bertie sulks.
+         2. Cyril runs and barks.
+         3. It will snow if it doesn't rain.
+         4. It's not the case that Irene will be happy if Olive or Tofu
+            comes.
+         5. Pat didn't cough or sneeze.
+         6. If you don't come if I call, I won't come if you call.
+    2. su Translate the following sentences into predicate-argument
+       formula of first order logic.
+         1. Angus likes Cyril and Irene hates Cyril.
+         2. Tofu is taller than Bertie.
+         3. Bruce loves himself and Pat does too.
+         4. Cyril saw Bertie, but Angus didn't.
+         5. Cyril is a fourlegged friend.
+         6. Tofu and Olive are near each other.
+    3. su Translate the following sentences into quantified formulas of
+       first order logic.
+         1. Angus likes someone and someone likes Julia.
+         2. Angus loves a dog who loves him.
+         3. Nobody smiles at Pat.
+         4. Somebody coughs and sneezes.
+         5. Nobody coughed or sneezed.
+         6. Bruce loves somebody other than Bruce.
+         7. Nobody other than Matthew loves somebody Pat.
+         8. Cyril likes everyone except for Irene.
+         9. Exactly one person is asleep.
+    4. su Translate the following verb phrases using l abstracts.
+       quantified formulas of first order logic.
+         1. feed Cyril and give a capuccino to Angus
+         2. be given 'War and Peace' by Pat
+         3. be loved by everyone
+         4. be loved or detested by everyone
+         5. be loved by everyone and detested by no-one
+    5. su Consider the following statements:
+
+
+>>> read_expr = nltk.sem.Expression.fromstring
+>>> e2 = read_expr('pat')
+>>> e3 = nltk.sem.ApplicationExpression(e1, e2)
+>>> print(e3.simplify())
+exists y.love(pat, y)
+
+       Clearly something is missing here, namely a declaration of the
+       value of e1. In order for ApplicationExpression(e1, e2) to be
+       b-convertible to exists y.love(pat, y), e1 must be a l-abstract
+       which can take pat as an argument. Your task is to construct such
+       an abstract, bind it to e1, and satisfy yourself that the
+       statements above are all satisfied (up to alphabetic variance). In
+       addition, provide an informal English translation of e3.simplify().
+       Now carry on doing this same task for the further cases of
+       e3.simplify() shown below.
+
+
+>>> print(e3.simplify())
+exists y.(love(pat,y) | love(y,pat))
+
+
+>>> print(e3.simplify())
+exists y.(love(pat,y) | love(y,pat))
+
+
+>>> print(e3.simplify())
+walk(fido)
+
+    6. su As in the preceding exercise, find a l abstract e1 that yields
+       results equivalent to those shown below.
+
+
+>>> e2 = read_expr('chase')
+>>> e3 = nltk.sem.ApplicationExpression(e1, e2)
+>>> print(e3.simplify())
+\x.all y.(dog(y) -> chase(x,pat))
+
+
+>>> e2 = read_expr('chase')
+>>> e3 = nltk.sem.ApplicationExpression(e1, e2)
+>>> print(e3.simplify())
+\x.exists y.(dog(y) & chase(pat,x))
+
+
+>>> e2 = read_expr('give')
+>>> e3 = nltk.sem.ApplicationExpression(e1, e2)
+>>> print(e3.simplify())
+\x0 x1.exists y.(present(y) & give(x1,y,x0))
+
+    7. su As in the preceding exercise, find a l abstract e1 that yields
+       results equivalent to those shown below.
+
+
+>>> e2 = read_expr('bark')
+>>> e3 = nltk.sem.ApplicationExpression(e1, e2)
+>>> print(e3.simplify())
+exists y.(dog(x) & bark(x))
+
+
+>>> e2 = read_expr('bark')
+>>> e3 = nltk.sem.ApplicationExpression(e1, e2)
+>>> print(e3.simplify())
+bark(fido)
+
+
+>>> e2 = read_expr('\\P. all x. (dog(x) -> P(x))')
+>>> e3 = nltk.sem.ApplicationExpression(e1, e2)
+>>> print(e3.simplify())
+all x.(dog(x) -> bark(x))
+
+    8. 0R Develop a method for translating English sentences into formulas
+       with binary generalized quantifiers. In such an approach, given a
+       generalized quantifier Q, a quantified formula is of the form Q(A,
+       B), where both A and B are expressions of type </e, t/>. Then, for
+       example, all(A, B) is true iff A denotes a subset of what B
+       denotes.
+    9. 0R Extend the approach in the preceding exercise so that the truth
+       conditions for quantifiers like most and exactly three can be
+       computed in a model.
+   10. 0R Modify the sem.evaluate code so that it will give a helpful
+       error message if an expression is not in the domain of a model's
+       valuation function.
+   11. * Select three or four contiguous sentences from a book for
+       children. A possible source of examples are the collections of
+       stories in nltk.corpus.gutenberg: bryant-stories.txt,
+       burgess-busterbrown.txt and edgeworth-parents.txt. Develop a
+       grammar which will allow your sentences to be translated into first
+       order logic, and build a model which will allow those translations
+       to be checked for truth or falsity.
+   12. * Carry out the preceding exercise, but use DRT as the meaning
+       representation.
+   13. * Taking
+       [https://www.nltk.org/book/bibliography.html#warren1982eea](Warren
+       & Pereira, 1982) as a starting point, develop a technique for
+       converting a natural language query into a form that can be
+       evaluated more efficiently in a model. For example, given a query
+       of the form (P(x) & Q(x)), convert it to (Q(x) & P(x)) if the
+       extension of Q is smaller than the extension of P.
+
+   About this document...
+
+   UPDATED FOR NLTK 3.0. This is a chapter from Natural Language
+   Processing with Python, by [http://stevenbird.net/]Steven Bird,
+   [http://homepages.inf.ed.ac.uk/ewan/]Ewan Klein and
+   [http://ed.loper.org/]Edward Loper, Copyright © 2019 the authors. It is
+   distributed with the Natural Language Toolkit [http://nltk.org/],
+   Version 3.0, under the terms of the Creative Commons
+   Attribution-Noncommercial-No Derivative Works 3.0 United States License
+   [[http://creativecommons.org/licenses/by-nc-nd/3.0/us/]http://creativec
+   ommons.org/licenses/by-nc-nd/3.0/us/].
+
+   This document was built on Wed 4 Sep 2019 11:40:48 ACST

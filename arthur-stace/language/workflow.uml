@@ -1,0 +1,7 @@
+@startuml
+github <- container: push
+container <- notes: run
+event <-> notes: capture + schedule
+notes -> todo: select
+todo -> notes: ipynb
+@enduml
