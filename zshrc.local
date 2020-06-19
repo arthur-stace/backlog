@@ -1,0 +1,5 @@
+source $HOME/.zsh/prompt.zsh
+
+eval `ssh-agent -s`
+eval `ssh-add -K ~/.ssh/id_rsa`
+
