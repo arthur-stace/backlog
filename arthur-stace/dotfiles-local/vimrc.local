@@ -1,0 +1,39 @@
+" Write less code!
+set nowrap
+let g:auto_save = 1
+let g:auto_save_events = ["InsertLeave", "TextChanged"]
+
+
+" Lightline setting
+set noshowmode
+let g:lightline = {
+      \ 'colorscheme': 'github',
+      \ }
+
+
+" Keep undo history when switching buffers
+set hidden
+
+
+" Aliases
+cnoreabbrev Qa qa
+cnoreabbrev Wqa wqa
+map ; :
+map :nt :NERDTree
+
+
+" Relative Linenumbers
+set relativenumber
+
+
+" Set the colorschemes.
+set t_Co=256
+colorscheme github
+
+
+" Shortcuts
+map <Leader>w :wa <Return>
+map <Leader>z :bp <Return>
+map <Leader>x :bn <Return>
+map <Leader>1 :!
+map <Leader>r :! bundle exec rspec <Return>

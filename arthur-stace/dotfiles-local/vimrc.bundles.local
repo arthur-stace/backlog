@@ -1,0 +1,6 @@
+Plug 'scrooloose/nerdtree'
+Plug 'cormacrelf/vim-colors-github'
+Plug 'kien/ctrlp.vim'
+Plug 'itchyny/lightline.vim'
+Plug 'aklt/plantuml-syntax'
+Plug '907th/vim-auto-save'
