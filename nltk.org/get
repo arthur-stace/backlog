@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+resource=$2
+outfile=$1
+
+for i in $SECTIONS; do
+  chapter=`basename $i .txt`
+
+  curl -o tmp/$chapter.html --remote-name $resource/$chapter.html
+done
+
+zip -r $outfile tmp/*.html
+
+

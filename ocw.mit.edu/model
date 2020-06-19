@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+section=$1
+dir=$2
+
+find $dir -name *.htm -path *$section* \
+| xargs cat  \
+| pup '#course_inner_section json{}'
