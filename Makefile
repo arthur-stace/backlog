@@ -10,7 +10,7 @@ SUBTREE_ADD = git subtree add --squash --prefix
 
 .PHONY:
 remotes: /tmp/repos.txt .PHONY
-	for remote_name in $(shell cat $< | head -n 2); do \
+	for remote_name in $(shell cat $<); do \
 		project_name=$(USER)/$$remote_name; \
 		$(ADD_REMOTE) $(USER)/$$remote_name https://github.com/$$project_name.git; \
 		$(SUBTREE_ADD) $$project_name $(USER)/$$remote_name master; \
