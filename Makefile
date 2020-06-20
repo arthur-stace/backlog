@@ -1,15 +1,35 @@
-LOCAL_RESOURCE = tmp/$(COURSE).zip
+include $(DOMAIN)/$(DOMAIN).mk
+include $(APPLICATION)/$(APPLICATION).mk
 
-DOMAIN ?= github.com
+.PHONY:
 
-include $(DOMAIN).mk
-include backlog.mk
-include radicale.mk
+default: extract transform load
 
-default: $(DOMAIN)
-	echo done
 
-$(DOMAIN): backlog data
+transform: .PHONY
 
-clean:
-	rm -rf tmp/$(DOMAIN) tmp/*.txt
+
+load: $(DIST)
+	mkdir -p $<
+	for file in $(SECTIONS); do cp $$file $</; done
+	mv dist backlog/
+
+
+documentation:
+	plantuml docs/*.uml
+	open docs/*.png
+
+
+
+clean: .PHONY
+	@echo "\ncleaning up...\n"
+	@rm -rf dist/$(DOMAIN)/$(COURSE)
+	@rm -rf tmp/$(DOMAIN) tmp/*.txt
+	@rm -rf $(SECTIONS)
+
+
+
+build:
+	docker build -t $(APPLICATION):latest -f $(APPLICATION)/Dockerfile .
+
+
