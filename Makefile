@@ -30,6 +30,6 @@ clean: .PHONY
 
 
 build:
-	docker build -t $(APPLICATION):latest -f $(APPLICATION)/Dockerfile .
+	docker build -t $(APPLICATION):latest -f $(APPLICATION)/Dockerfile $(APPLICATION)
 
 

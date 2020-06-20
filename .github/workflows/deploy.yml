@@ -17,10 +17,9 @@ jobs:
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{secrets.HEROKU_APPLICATION_NAME}} #Must be unique in Heroku
-          heroku_email: "arthur.stace@pm.me"
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
           buildpack: "heroku-buildpack-static" #OPTIONAL
-          # branch: "YOUR_BRANCH" #OPTIONAL and DEFAULT - 'HEAD' (a.k.a your current branch)
           dontuseforce: false #OPTIONAL and DEFAULT - false
           usedocker: true #OPTIONAL and DEFAULT - false
-          appdir: "" #OPTIONAL and DEFAULT - "". This is useful if the api you're deploying is in a subfolder
+          appdir: "backlog" #OPTIONAL and DEFAULT - "". This is useful if the api you're deploying is in a subfolder
           docker_heroku_process_type: "web" #OPTIONAL and DEFAULT - "web"
