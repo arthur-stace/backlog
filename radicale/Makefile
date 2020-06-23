@@ -1,5 +1,5 @@
+JQ = $(shell which jq)
 COLLECTION_ROOT = $(APPLICATION)/data/collections/collection-root
-WORKDIR = $(shell pwd)
 
 
 default: extract
@@ -18,7 +18,12 @@ $(COLLECTION_ROOT):
 $(COLLECTION_ROOT)/user/%/.Radicale.props: $(COLLECTION_ROOT)
 	rm -f $@
 	mkdir -p `dirname $@`
-	jq -nc  --arg name $(DOMAIN) --arg desc $(DOMAIN) --arg color '#000000' -f etc/`basename $@`.jq > $@
+	$(JQ) -nc  --arg name $(DOMAIN) --arg desc $(DOMAIN) --arg color '#000000' -f `basename $@`.jq > $@
+
+
+
+build:
+	docker build -t radicale:latest .
 
 
 
