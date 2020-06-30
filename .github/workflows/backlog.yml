@@ -6,12 +6,12 @@ on:
     branches: [master]
 jobs:
   build:
+    runs-on: ubuntu-latest
     steps:
-    - name: build yaaghs @ 1593557779
-    - runs-on: ubuntu-latest
-    - uses: actions/checkout@v2
+    - name: build env.CONTAINER @ 1593558557
+    - uses: actions/checkout@master
       with:
-        repository: arthur-stace/yaaghs
+        repository: arthur-stace/env.CONTAINER
       env:
         PROJECT: arthur-stace/rails
-      run: docker build yaaghs --tag yaaghs:1593557779
+      run: docker build env.CONTAINER --tag env.CONTAINER:1593558557
