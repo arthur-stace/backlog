@@ -3,8 +3,9 @@
   value:
   - name: build env.DOMAIN @ env.TAG
   - runs-on: ubuntu-latest
-  - uses: actions/checkout@master
-    with: arthur-stace/env.DOMAIN
+  - uses: actions/checkout@v2
+    with:
+      repository: arthur-stace/env.DOMAIN
     env:
       PROJECT: env.PROJECT
     run: docker build env.DOMAIN --tag env.DOMAIN:env.TAG

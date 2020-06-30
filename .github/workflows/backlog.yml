@@ -7,10 +7,11 @@ on:
 jobs:
   build:
     steps:
-    - name: build yaaghs @ 1593557475
-    - uses: actions/checkout@master
-      with: arthur-stace/yaaghs
-      runs-on: ubuntu-latest
+    - name: build yaaghs @ 1593557779
+    - runs-on: ubuntu-latest
+    - uses: actions/checkout@v2
+      with:
+        repository: arthur-stace/yaaghs
       env:
         PROJECT: arthur-stace/rails
-      run: docker build yaaghs --tag yaaghs:1593557475
+      run: docker build yaaghs --tag yaaghs:1593557779
