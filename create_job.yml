@@ -1,10 +1,10 @@
 - command: update
   path: jobs.build.steps
   value:
-  - name: build env.CONTAINER @ env.TAG
+  - name: build env.DOMAIN @ env.TAG
   - uses: actions/checkout@master
     with:
-      repository: arthur-stace/env.CONTAINER
+      repository: arthur-stace/env.DOMAIN
     env:
       PROJECT: env.PROJECT
-    run: docker build env.CONTAINER --tag env.CONTAINER:env.TAG
+    run: docker build env.DOMAIN --tag env.DOMAIN:env.TAG

@@ -15,3 +15,10 @@ jobs:
       env:
         PROJECT: arthur-stace/rails
       run: docker build env.CONTAINER --tag env.CONTAINER:1593558557
+    - name: build yaaghs @ 1593558630
+    - uses: actions/checkout@master
+      with:
+        repository: arthur-stace/yaaghs
+      env:
+        PROJECT: arthur-stace/rails
+      run: docker build yaaghs --tag yaaghs:1593558630
