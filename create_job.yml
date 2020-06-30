@@ -2,9 +2,5 @@
   path: jobs.build.steps
   value:
   - name: build env.DOMAIN @ env.TAG
-  - uses: actions/checkout@master
-    with:
-      repository: arthur-stace/env.DOMAIN
-    env:
-      PROJECT: env.PROJECT
+  - uses: actions/checkout@v2
     run: docker build env.DOMAIN --tag env.DOMAIN:env.TAG
