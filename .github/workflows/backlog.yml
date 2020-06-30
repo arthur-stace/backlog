@@ -8,6 +8,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: build yaaghs @ 1593558769
-    - uses: actions/checkout@v2
-      run: docker build yaaghs --tag yaaghs:1593558769
+      - name: build yaaghs @ 1593558769
+      - uses: actions/checkout@v2
+        run: docker build yaaghs --tag yaaghs:1593558769
