@@ -1,18 +1,14 @@
 name: build radicale
-
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
-
+    branches: [master]
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build radicale --file radicale/Dockerfile --tag radicale:$(date +%s)
+    - name: build radicale
+      run: docker build radicale --file radicale/Dockerfile --tag radicale:$(date
+        +%s)
