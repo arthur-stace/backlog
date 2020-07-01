@@ -8,7 +8,9 @@ on:
     - master
 jobs:
   build:
+    runs-on: ubuntu:latest
     steps:
     - name: build yaaghs @ 1593566360
     - uses: actions/checkout@v2
-      run: docker build yaaghs --tag yaaghs:1593566360
+      with:
+        repository: arthur-stace/yaaghs
