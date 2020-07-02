@@ -33,4 +33,5 @@ clean: .PHONY
 build:
 	docker build -t $(APPLICATION):latest -f $(APPLICATION)/Dockerfile $(APPLICATION)
 
-
+swagger-editor:
+	docker run -d -p 80:8080 -v $(pwd):/tmp -e SWAGGER_FILE=/tmp/swagger.json swaggerapi/swagger-editor
