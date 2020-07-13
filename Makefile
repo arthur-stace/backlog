@@ -16,9 +16,8 @@ load: $(DIST)
 
 
 
-documentation:
-	plantuml docs/*.uml
-	open docs/*.png
+docs/%.plantuml:
+	@plantuml -ttxt $@
 
 
 
